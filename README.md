@@ -17,33 +17,60 @@ FROM "Orders";
 
 # Автоматизация теста к API
 
-Data:
-order_body = {    "firstName": "Anton",
-    "lastName": "Zaitsev",    "address": "Chertaovskaya",
-    "metroStation": 2,    "phone": "+7 999 999 99 99",
-    "rentTime": 2,    "deliveryDate": "2023-01-01",
-    "comment": "No phone calls",    "color": [
-        "BLACK"    ]
+data:
+order_body = {
+    "firstName": "Naruto",
+    "lastName": "Uchiha",
+    "address": "Konoha, 142 apt.",
+    "metroStation": 4,
+    "phone": "+7 800 355 35 35",
+    "rentTime": 5,
+    "deliveryDate": "2020-06-06",
+    "comment": "Saske, come back to Konoha",
+    "color": [
+        "BLACK"
+    ]
 }
 
-Configuraion:
-CREATE_ORDER_PATH = "/api/v1/orders"GET_ORDER_BY_TRACK_PATH = "/api/v1/orders/track?t="
-URL = ""
 
-sender:
-import configuration 
+configuraion:
+CREATE_ORDER_PATH = "/api/v1/orders"
+GET_ORDER_BY_TRACK_PATH = "/api/v1/orders/track?t="
+URL = "https://ed5be1ac-c862-4588-87a9-9a099b27a19b.serverhub.praktikum-services.ru"
+
+sender_stand_request:
+import configuration
 import requests
+
 #функция на создание заказа
-def create_order(order_body):   return requests.post(configuration.URL + configuration.CREATE_ORDER_PATH,
-                         json=order_body
+def create_order(order_body):
+    return requests.post(configuration.URL + configuration.CREATE_ORDER_PATH, json=order_body)
+
 #функция получения заказа по треку
-def get_order_info_by_track(track):    
-                                  return requests.get(configuration.URL + configuration.GET_ORDER_BY_TRACK_PATH + str(track))
+def get_order_info_by_track(track):
+    return requests.get(configuration.URL + configuration.GET_ORDER_BY_TRACK_PATH + str(track))
 
 create:
-import sender_stand_requestimport data
-#получение данных о заказе по его трекуdef test_create_order():
-    track_number = sender_stand_request.get_order_info_by_track(sender_stand_request.create_order(data.order_body).json()["track"])    assert track_number.status_code == 200
+import sender_stand_request
+import data
+import requests
+
+#получение данных о заказе по его треку
+def test_create_order():
+    track_number = sender_stand_request.get_order_info_by_track(sender_stand_request.create_order(data.order_body).json()["track"])
+    assert track_number.status_code == 200
+
+
+# Скриншоты 
+![image](https://github.com/AntonZaitsev1996/DIPLOM/assets/143004894/639f00dc-a792-49ce-8032-7e5d7dfbe015)
+![image](https://github.com/AntonZaitsev1996/DIPLOM/assets/143004894/f3c2878b-e9ac-4850-bd56-cb56de328115)
+![image](https://github.com/AntonZaitsev1996/DIPLOM/assets/143004894/aadac795-4441-43c7-95b9-9c3cdd08a2ab
+![image](https://github.com/AntonZaitsev1996/DIPLOM/assets/143004894/3633afbf-4e0f-41f8-becc-7bd431685318)
+
+
+
+
+
 
 
 
